@@ -13,15 +13,15 @@ class ChangeSsPassForm(forms.Form):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'input is-danger',
-                'placeholder': "密码",
-                'type': 'text',
+                'placeholder': "连接密码",
+                'type': 'password',
             }
         ),
     )
 
     def clean(self):
         if not self.is_valid():
-            raise forms.ValidationError('太短啦！')
+            raise forms.ValidationError('密码过短')
         else:
             cleaned_data = super(ChangeSsPassForm, self).clean()
 
