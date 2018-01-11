@@ -85,8 +85,8 @@ def ChangeSsPass(request):
             ss_user.password = ss_pass
             ss_user.save()
             registerinfo = {
-                'title': '修改成功！',
-                'subtitle': '请及时更换客户端密码！',
+                'title': '修改成功',
+                'subtitle': '请更换客户端密码',
                 'status': 'success',
             }
             context = {
@@ -111,8 +111,8 @@ def ChangeSsMethod(request):
         ss_user.method = ss_method
         ss_user.save()
         registerinfo = {
-            'title': '修改成功！',
-            'subtitle': '请及时更换客户端配置！',
+            'title': '修改成功',
+            'subtitle': '请更换客户端配置',
             'status': 'success',
         }
         methods = [m[0] for m in METHOD_CHOICES]
@@ -138,8 +138,8 @@ def ChangeSsProtocol(request):
         ss_user.protocol = ss_protocol
         ss_user.save()
         registerinfo = {
-            'title': '修改成功！',
-            'subtitle': '请及时更换客户端配置！',
+            'title': '修改成功',
+            'subtitle': '请更换客户端配置',
             'status': 'success',
         }
         methods = [m[0] for m in METHOD_CHOICES]
@@ -165,8 +165,8 @@ def ChangeSsObfs(request):
         ss_user.obfs = ss_obfs
         ss_user.save()
         registerinfo = {
-            'title': '修改成功！',
-            'subtitle': '请及时更换客户端配置！',
+            'title': '修改成功',
+            'subtitle': '请及时更换客户端配置',
             'status': 'success',
         }
         methods = [m[0] for m in METHOD_CHOICES]
