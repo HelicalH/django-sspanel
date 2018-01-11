@@ -954,8 +954,8 @@ def good_delete(request, pk):
     goods = Shop.objects.all()
 
     registerinfo = {
-        'title': '删除商品',
-        'subtitle': '成功啦',
+        'title': '删除成功',
+        'subtitle': '该商品已删除',
                     'status': 'success', }
 
     context = {
@@ -1023,7 +1023,7 @@ def good_create(request):
             goods = Shop.objects.all()
             registerinfo = {
                 'title': '添加成功',
-                'subtitle': '数据更新成功！',
+                'subtitle': '数据更新成功',
                 'status': 'success', }
             context = {
                 'goods': goods,
@@ -1071,8 +1071,8 @@ def anno_delete(request, pk):
     anno.delete()
     anno = Announcement.objects.all()
     registerinfo = {
-        'title': '删除公告',
-        'subtitle': '成功啦',
+        'title': '删除成功',
+        'subtitle': '该公告已删除',
                     'status': 'success', }
     context = {
         'anno': anno,
