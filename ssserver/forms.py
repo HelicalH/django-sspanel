@@ -14,7 +14,7 @@ class ChangeSsPassForm(forms.Form):
             attrs={
                 'class': 'input is-danger',
                 'placeholder': "连接密码",
-                'type': 'password',
+                'type': 'text',
             }
         ),
     )
