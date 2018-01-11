@@ -93,8 +93,8 @@ def register(request):
 
             else:
                 registerinfo = {
-                    'title': '注册成功！',
-                    'subtitle': '请登录使用吧！',
+                    'title': '注册成功',
+                    'subtitle': '低调低调',
                     'status': 'success',
                 }
                 context = {
@@ -143,7 +143,7 @@ def Login_view(request):
                     int(settings.MAX_CHECKIN_TRAFFIC / 1024 / 1024))
                 remain_traffic = 100 - eval(user.ss_user.get_used_percentage())
                 registerinfo = {
-                    'title': '登录成功！',
+                    'title': '登录成功',
                     'subtitle': '自动跳转到用户中心',
                     'status': 'success',
                 }
@@ -161,8 +161,8 @@ def Login_view(request):
             else:
                 form = LoginForm()
                 registerinfo = {
-                    'title': '登录失败！',
-                    'subtitle': '请重新填写信息！',
+                    'title': '登录失败',
+                    'subtitle': '请重新填写信息',
                     'status': 'error',
                 }
                 context = {
@@ -182,7 +182,7 @@ def Logout_view(request):
     logout(request)
     registerinfo = {
         'title': '注销成功',
-        'subtitle': '欢迎下次再来',
+        'subtitle': '低调低调',
                     'status': 'success',
     }
     context = {
@@ -233,13 +233,13 @@ def checkin(request):
         ss_user.last_check_in_time = timezone.now()
         ss_user.save()
         registerinfo = {
-            'title': '签到成功！',
-            'subtitle': '获得{}m流量！'.format(ll // settings.MB),
+            'title': '成功',
+            'subtitle': '获得{}m流量'.format(ll // settings.MB),
             'status': 'success', }
     else:
         registerinfo = {
-            'title': '签到失败！',
-            'subtitle': '距离上次签到不足一天',
+            'title': '失败',
+            'subtitle': '距离上次不足一天',
             'status': 'error', }
 
     result = json.dumps(registerinfo, ensure_ascii=False)
@@ -257,7 +257,7 @@ def get_ssr_qrcode(request, node_id):
     node = Node.objects.get(node_id=node_id)
     # 加入节点信息等级判断
     if user.level < node.level:
-        return HttpResponse('哟小伙子，可以啊！但是投机取巧是不对的哦！')
+        return HttpResponse('投机取巧是不对的哦')
     ssr_link = node.get_ssr_link(ss_user)
     ssr_img = qrcode.make(ssr_link)
     buf = BytesIO()
@@ -279,7 +279,7 @@ def get_ss_qrcode(request, node_id):
     node = Node.objects.get(node_id=node_id)
     # 加入节点信息等级判断
     if user.level < node.level:
-        return HttpResponse('哟小伙子，可以啊！但是投机取巧是不对的哦！')
+        return HttpResponse('投机取巧是不对的哦')
     ss_link = node.get_ss_link(ss_user)
     ss_img = qrcode.make(ss_link)
     buf = BytesIO()
@@ -478,8 +478,8 @@ def charge(request):
                 # 检索充值记录
                 codelist = MoneyCode.objects.filter(user=user)
                 registerinfo = {
-                    'title': '充值成功！',
-                    'subtitle': '请去商店购买商品！',
+                    'title': '充值成功',
+                    'subtitle': '请去商店购买商品',
                     'status': 'success',
                 }
                 context = {
@@ -515,7 +515,7 @@ def ticket_create(request):
         ticket = Ticket.objects.filter(user=request.user)
         registerinfo = {
             'title': '添加成功',
-            'subtitle': '数据更新成功！',
+            'subtitle': '数据更新成功',
             'status': 'success', }
 
         context = {
@@ -581,10 +581,9 @@ def affiliate(request):
         inviteNum = request.user.invitecode_num - len(invidecodes)
     else:
         # 如果是管理员，特殊处理
-        # 写死，每次只能生成5额邀请码
         invidecodes = InviteCode.objects.filter(
             code_id=request.user.pk, type=0, isused=False)
-        inviteNum = 5
+        inviteNum = settings.INVITE_NUM
     context = {
         'invitecodes': invidecodes,
         'invitePercent': settings.INVITE_PERCENT * 100,
@@ -632,8 +631,8 @@ def node_delete(request, node_id):
     node.delete()
     nodes = Node.objects.all()
     registerinfo = {
-        'title': '删除节点',
-        'subtitle': '成功啦',
+        'title': '删除成功',
+        'subtitle': '节点已删除',
                     'status': 'success', }
     context = {
         'nodes': nodes,
@@ -693,7 +692,7 @@ def node_create(request):
             nodes = Node.objects.all()
             registerinfo = {
                 'title': '添加成功',
-                'subtitle': '数据更新成功！',
+                'subtitle': '数据更新成功',
                 'status': 'success', }
             context = {
                 'nodes': nodes,
@@ -826,7 +825,6 @@ def user_delete(request, pk):
     '''删除user'''
     user = User.objects.filter(pk=pk)
     user.delete()
-
     obj = User
     page_num = 15
     context = Page_List_View(request, obj, page_num).get_page_context()
@@ -835,7 +833,6 @@ def user_delete(request, pk):
         'title': '删除用户',
         'subtitle': '成功啦',
                     'status': 'success', }
-
     context['registerinfo'] = registerinfo
     return render(request, 'backend/userlist.html', context=context)
 
@@ -851,7 +848,6 @@ def user_search(request):
     }
 
     return render(request, 'backend/userlist.html', context=context)
-
 
 @permission_required('shadowsocks')
 def user_status(request):
@@ -883,8 +879,9 @@ def user_status(request):
 @permission_required('shadowsocks')
 def backend_invite(request):
     '''邀请码生成'''
+    codelist = InviteCode.objects.filter(type=1, isused=False, code_id=1)
     code_list = InviteCode.objects.filter(type=0, isused=False, code_id=1)
-    return render(request, 'backend/invitecode.html', {'code_list': code_list, })
+    return render(request, 'backend/invitecode.html', {'code_list': code_list, 'codelist': codelist,})
 
 
 @permission_required('shadowsocks')
