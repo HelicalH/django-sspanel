@@ -48,7 +48,7 @@ START_PORT  = 9999
 # 默认加密混淆协议
 DEFAULT_METHOD = 'aes-256-cfb'
 DEFAULT_PROTOCOL = 'origin'
-DEFAULT_OBFS = 'plain'
+DEFAULT_OBFS = 'http_simple_compatible'
 
 # 签到流量设置
 MIN_CHECKIN_TRAFFIC = 10 * MB
