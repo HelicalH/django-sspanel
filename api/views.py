@@ -210,8 +210,8 @@ def pay_request(request):
             request.session['out_trade_no'] = out_trade_no
             request.session['amount'] = amount
             info = {
-                'title': '请求成功',
-                'subtitle': '支付宝扫描下方二维码付款，付款完成请按确认',
+                'title': '提示',
+                'subtitle': '付款完成后请务必按[确认]键',
                 'status': 'success', }
             context['info'] = info
         except:
@@ -269,8 +269,9 @@ def pay_query(request):
     if paid is False:
         alipay.api_alipay_trade_cancel(out_trade_no=trade_num)
         info = {
-            'title': '支付查询失败',
-            'subtitle': '确认支付了码？',
+
+            'title': '支付错误',
+            'subtitle': '确认支付了么？',
             'status': 'error', }
         context['info'] = info
     result = json.dumps(context, ensure_ascii=False)
@@ -289,7 +290,7 @@ def traffic_query(request):
     labels = ['{}-{}'.format(t.month, t.day) for t in last_week]
     trafficdata = [TrafficLog.getTrafficByDay(
         node_id, user_id, t) for t in last_week]
-    title = '节点 {} 当月共消耗：{} GB'.format(node_name,
+    title = '{}节点当月共消耗 ：{} GB'.format(node_name,
                                        TrafficLog.getUserTraffic(node_id, user_id))
     configs = {
         'title': title,
