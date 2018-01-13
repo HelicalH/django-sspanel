@@ -88,8 +88,8 @@ def change_ss_port(request):
     user.port = port
     user.save()
     registerinfo = {
-        'title': '修改成功！',
-        'subtitle': '端口修改为：{}！'.format(port),
+        'title': '修改成功',
+        'subtitle': '端口修改为：{}'.format(port),
         'status': 'success',
     }
     result = json.dumps(registerinfo, ensure_ascii=False)
@@ -143,7 +143,7 @@ def purchase(request):
         good = Shop.objects.get(pk=goodId)
         if user.balance < good.money:
             registerinfo = {
-                'title': '金额不足！',
+                'title': '金额不足',
                 'subtitle': '请去捐赠界面/联系站长充值',
                 'status': 'error', }
         else:
@@ -210,8 +210,8 @@ def pay_request(request):
             request.session['out_trade_no'] = out_trade_no
             request.session['amount'] = amount
             info = {
-                'title': '请求成功！',
-                'subtitle': '支付宝扫描下方二维码付款，付款完成记得按确认哟！',
+                'title': '提示',
+                'subtitle': '付款完成后请务必按[确认]键',
                 'status': 'success', }
             context['info'] = info
         except:
@@ -260,8 +260,8 @@ def pay_query(request):
         del request.session['out_trade_no']
         # 返回充值信息
         info = {
-            'title': '充值成功！',
-            'subtitle': '请去商品界面购买商品！',
+            'title': '充值成功',
+            'subtitle': '请去商品界面购买商品',
             'status': 'success', }
         context['info'] = info
 
@@ -269,8 +269,8 @@ def pay_query(request):
     if paid is False:
         alipay.api_alipay_trade_cancel(out_trade_no=trade_num)
         info = {
-            'title': '支付查询失败！',
-            'subtitle': '亲，确认支付了么？',
+            'title': '支付错误',
+            'subtitle': '确认支付了么？',
             'status': 'error', }
         context['info'] = info
     result = json.dumps(context, ensure_ascii=False)
@@ -289,7 +289,7 @@ def traffic_query(request):
     labels = ['{}-{}'.format(t.month, t.day) for t in last_week]
     trafficdata = [TrafficLog.getTrafficByDay(
         node_id, user_id, t) for t in last_week]
-    title = '节点 {} 当月共消耗：{} GB'.format(node_name,
+    title = '{}节点当月共消耗 ：{} GB'.format(node_name,
                                        TrafficLog.getUserTraffic(node_id, user_id))
     configs = {
         'title': title,
