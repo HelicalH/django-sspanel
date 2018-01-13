@@ -9,29 +9,26 @@ from .models import Announcement, Node, Shop, User
 class RegisterForm(UserCreationForm):
     '''注册时渲染的表单'''
 
-    username = forms.CharField(label='用户名', help_text='必填。150个字符或者更少。包含字母，数字和仅有的@/./+/-/_符号。',
+    username = forms.CharField(label='用户名', help_text='8～32个字符。可包含字母、数字和 @ . + - _ 符号。',
                                widget=forms.TextInput(
-                                   attrs={'class': 'input is-info'})
+                                   attrs={'class': 'input is-info', 'placeholder': "用户名，必填。", 'maxlength': '32', 'minlength': '8'})
                                )
 
-    email = forms.EmailField(label='邮箱',
+    email = forms.EmailField(label='邮箱', help_text='''''',
                              widget=forms.TextInput(
-                                 attrs={'class': 'input is-warning'})
+                                 attrs={'class': 'input is-warning', 'placeholder': "邮箱，必填。找回密码时使用。", 'maxlength': '32', 'minlength': '8'})
                              )
-    invitecode = forms.CharField(label='邀请码', help_text='邀请码必须填写',
+    invitecode = forms.CharField(label='邀请码', help_text='网站邀请码页面获取',
                                  widget=forms.TextInput(
-                                     attrs={'class': 'input is-success'})
+                                     attrs={'class': 'input is-success', 'placeholder': "邀请码，必填。", 'maxlength': '24', 'minlength': '24'})
                                  )
-    password1 = forms.CharField(label='密码', help_text='''你的密码不能与其他个人信息太相似。
-                                                        你的密码必须包含至少 8 个字符。
-                                                        你的密码不能是大家都爱用的常见密码
-                                                        你的密码不能全部为数字。''',
+    password1 = forms.CharField(label='密码', help_text='''8～32个字符。不能与其他个人信息太相似。不能全部为数字。''',
                                 widget=forms.TextInput(
-                                    attrs={'class': 'input is-primary', 'type': 'password'})
+                                    attrs={'class': 'input is-primary', 'type': 'password', 'placeholder': "密码，必填。", 'maxlength': '32', 'minlength': '8'})
                                 )
-    password2 = forms.CharField(label='重复密码',
+    password2 = forms.CharField(label='重复密码',help_text='''''',
                                 widget=forms.TextInput(
-                                    attrs={'class': 'input is-danger', 'type': 'password'})
+                                    attrs={'class': 'input is-danger', 'type': 'password', 'placeholder': "再次输入密码，必填。", 'maxlength': '32', 'minlength': '8'})
                                 )
 
     def clean_email(self):
@@ -44,7 +41,7 @@ class RegisterForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'invitecode',)
+        fields = ('invitecode','username', 'email', 'password1', 'password2', )
 
 
 class LoginForm(forms.Form):
@@ -54,8 +51,10 @@ class LoginForm(forms.Form):
         error_messages={'required': '请输入用户名'},
         widget=forms.TextInput(
             attrs={
-                'class': 'input is-primary',
+                'class': 'input',
                 'placeholder': "用户名",
+                'maxlength': '32',
+                'minlength': '8',
             }
         ),
     )
@@ -65,9 +64,11 @@ class LoginForm(forms.Form):
         error_messages={'required': u'请输入密码'},
         widget=forms.PasswordInput(
             attrs={
-                'class': 'input is-primary',
+                'class': 'input',
                 'placeholder': "密码",
                 'type': 'password',
+                'maxlength': '32',
+                'minlength': '8',
             }
         ),
     )

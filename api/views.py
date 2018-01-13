@@ -269,6 +269,7 @@ def pay_query(request):
     if paid is False:
         alipay.api_alipay_trade_cancel(out_trade_no=trade_num)
         info = {
+
             'title': '支付错误',
             'subtitle': '确认支付了么？',
             'status': 'error', }
