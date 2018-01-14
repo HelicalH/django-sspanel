@@ -892,8 +892,8 @@ def gen_invite_code(request):
     for i in range(int(Num)):
         code = InviteCode(type=type)
         code.save()
-
-    code_list = InviteCode.objects.filter(type=0, isused=False)
+    codelist = InviteCode.objects.filter(type=1, isused=False, code_id=1)
+    code_list = InviteCode.objects.filter(type=0, isused=False, code_id=1)
     registerinfo = {
         'title': '成功',
         'subtitle': '添加邀请码{}个'.format(Num),
@@ -901,6 +901,7 @@ def gen_invite_code(request):
 
     context = {
         'registerinfo': registerinfo,
+        'codelist': codelist,
         'code_list': code_list,
     }
 
