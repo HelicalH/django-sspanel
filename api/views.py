@@ -211,14 +211,14 @@ def pay_request(request):
             request.session['amount'] = amount
             info = {
                 'title': '提示',
-                'subtitle': '付款完成后请务必按[确认]键',
+                'subtitle': '付款完成后请务必按 [确认] 键',
                 'status': 'success', }
             context['info'] = info
         except:
             res = alipay.api_alipay_trade_cancel(
                 out_trade_no=out_trade_no)
             info = {
-                'title': '糟糕，当面付插件可能出现问题了',
+                'title': '糟糕，可能出现问题了',
                 'subtitle': '如果一直失败,请后台联系站长',
                 'status': 'error', }
             context['info'] = info
@@ -271,7 +271,7 @@ def pay_query(request):
         info = {
 
             'title': '支付错误',
-            'subtitle': '确认支付了么？',
+            'subtitle': '如有疑问请尽快联系站长',
             'status': 'error', }
         context['info'] = info
     result = json.dumps(context, ensure_ascii=False)
